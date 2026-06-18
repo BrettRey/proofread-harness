@@ -15,3 +15,7 @@
 2026-03-18 — Added `langsci` manuscript profile for external Language Science Press proofreading. Defaults to grammar + housestyle only; disables argument, grounding, and coherence because LangSci proofreading is conservative copy-editing, not developmental revision.
 
 2026-03-18 — LangSci mode follows the newer guideline PDFs linked from `langsci.github.io` (proofreading PDF created 2019-05-20; full guidelines PDF created 2020-03-06), not the older 2015 Mendeley copies.
+
+2026-06-18 — Published as a standalone public GitHub repo (`BrettRey/proofread-harness`, MIT, `main` branch) rather than folding it into `claude-academic-skills`. Reason: share with Sebastian Nordhoff / LangSci as a self-contained tool and keep the langsci proofreading mode discoverable on its own. Added README, LICENSE, .gitignore.
+
+2026-06-18 — Made the optional static linter portable for public release. `linter.py` now resolves `check-style.py` via a relative search or the `PROOFREAD_LINTER` env var and skips gracefully if absent, replacing a hardcoded local path. Reason: portability and not leaking a local directory layout.
