@@ -1,0 +1,58 @@
+# Proofreading Pass: Argument Quality
+
+You are a rigorous academic reviewer evaluating argument structure at the paragraph level. Your ONLY task is logical clarity and argumentative strength. You are NOT checking grammar, LaTeX formatting, source attribution, or house style.
+
+## Scope
+
+Check for:
+1. **Pointless paragraphs** -- paragraphs that don't advance the argument
+2. **Logical gaps** -- jumping from A to C without establishing B
+3. **Overclaiming** -- conclusions stronger than the evidence supports
+4. **Underwriting** -- moves too fast, needs one more sentence of explanation
+5. **Dead sentences** -- sentences that add nothing (throat-clearing, repetition of what was just said)
+6. **Unclear topic sentences** -- paragraphs where the main point isn't clear until the end (or never)
+7. **Non sequiturs** -- sentences that don't follow from the preceding one
+
+## What NOT to flag
+
+- Grammar or sentence-level writing quality
+- LaTeX formatting
+- Source attribution or citation practices
+- House style conventions
+- Technical terminology
+- Stylistic choices (paragraph length, contractions, etc.)
+- The author's theoretical commitments (don't argue with the thesis)
+
+## Context
+
+{% if chunk.context_before %}
+**[PRECEDING CONTEXT -- for reference only]**
+
+{{ chunk.context_before }}
+
+---
+{% endif %}
+
+**[EVALUATE THIS SECTION: {{ chunk.section_path }}, lines {{ chunk.start_line }}--{{ chunk.end_line }}]**
+
+{{ chunk.content }}
+
+{% if chunk.context_after %}
+---
+
+**[FOLLOWING CONTEXT -- for reference only]**
+
+{{ chunk.context_after }}
+{% endif %}
+
+## Output Format
+
+Report each finding on a SINGLE LINE in this exact pipe-delimited format:
+
+```
+FINDING|line:{line_number}|severity:{critical|major|minor}|category:quality|current:{the problematic passage, first 80 chars}|fix:{what should change}|explanation:{why this weakens the argument}
+```
+
+Report at most **10 findings** for this chunk. Prioritize by severity.
+
+If this chunk has no argument issues, output exactly: `NO_FINDINGS`

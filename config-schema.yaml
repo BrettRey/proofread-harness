@@ -1,0 +1,67 @@
+# Proofread Harness Configuration
+# Copy to your project and customize. Or just use the defaults.
+#
+# Usage:
+#   python tools/proofread-harness/run.py paper.tex --config config.yaml
+#
+# Optional project-level suppressions:
+#   proofread-ignore.yaml
+#   proofread-ignore.yml
+#
+# Format:
+# ignore:
+#   - file: 01 key concepts.tex
+#     lens: coherence
+#     explanation_contains: learning objectives promise adjectives
+
+# --- Manuscript Profile ---
+# `paper` keeps the full research-style lens set.
+# `textbook` defaults to grammar + housestyle + coherence, with
+# argument and grounding disabled unless you explicitly re-enable them.
+# `langsci` is for external Language Science Press proofreading:
+# grammar + LangSci style/reference checks, with substantive review disabled.
+manuscript_type: paper      # paper | textbook | langsci
+
+# --- Lenses ---
+# Each lens is a focused proofreading pass.
+# Available: grammar, argument, grounding, housestyle, coherence
+# These explicit `enabled` values override the manuscript profile defaults.
+lenses:
+  - name: grammar
+    cli: codex          # Which CLI to use
+    scope: chunk        # chunk | document
+    enabled: true
+  - name: argument
+    cli: codex
+    scope: chunk
+    enabled: true
+  - name: grounding
+    cli: codex
+    scope: chunk
+    enabled: true
+  - name: housestyle
+    cli: codex
+    scope: chunk
+    enabled: true
+  - name: coherence
+    cli: codex          # Use claude for 1M context if document is large
+    scope: document
+    enabled: true
+
+# --- Chunking ---
+chunking:
+  max_paragraphs: 8         # Max paragraphs per chunk before splitting
+  overlap_paragraphs: 1     # Paragraphs of overlap between chunks
+
+# --- Dispatch ---
+dispatch:
+  parallelism: 6             # Max concurrent CLI calls
+  timeout_seconds: 120       # Kill a CLI call after this long
+  retry_on_failure: 1        # Retries per failed call
+  temp_dir: /tmp/proofread-harness
+
+# --- Output ---
+output:
+  dir: proofread-output      # Relative to input file
+  report_name: proofread-report.md
+  save_raw: true             # Save raw CLI output for debugging

@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Harness run artifacts
+proofread-output/
+state.json
+/tmp/proofread-harness/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Local draft material (not part of the tool)
+email-*.md
+*-draft.md

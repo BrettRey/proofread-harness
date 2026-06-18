@@ -1,0 +1,46 @@
+# LangSci proofreading profile
+# Use for external Language Science Press proofreading jobs where the task is
+# conservative copy-editing against LangSci rules, not substantive revision.
+#
+# Example:
+#   python tools/proofread-harness/run.py chapter.tex \
+#     --config tools/proofread-harness/langsci-proofread.yaml
+
+manuscript_type: langsci
+
+lenses:
+  - name: grammar
+    cli: codex
+    scope: chunk
+    enabled: true
+  - name: argument
+    cli: codex
+    scope: chunk
+    enabled: false
+  - name: grounding
+    cli: codex
+    scope: chunk
+    enabled: false
+  - name: housestyle
+    cli: codex
+    scope: chunk
+    enabled: true
+  - name: coherence
+    cli: codex
+    scope: document
+    enabled: false
+
+chunking:
+  max_paragraphs: 8
+  overlap_paragraphs: 1
+
+dispatch:
+  parallelism: 6
+  timeout_seconds: 120
+  retry_on_failure: 1
+  temp_dir: /tmp/proofread-harness
+
+output:
+  dir: proofread-output
+  report_name: proofread-report.md
+  save_raw: true
